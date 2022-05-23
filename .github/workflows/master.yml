@@ -13,19 +13,31 @@ jobs:
           uses: actions/setup-go@v3
           with:
             go-version: '1.18'
-        - name: Run x64 build
-          run: go build -o gotcpscan-x64 main.go
+        - name: Run linux/x64 build
+          run: go build -o gotcpscan-lin-x64 main.go
           env:
               GOOS: linux
               GOARCH: 'amd64'
-        - name: Run x86 build
-          run: go build -o gotcpscan-x86 main.go
+        - name: Run linux/x86 build
+          run: go build -o gotcpscan-lin-x86 main.go
           env:
               GOOS: linux
+              GOARCH: '386'
+        - name: Run windows/x64 build
+          run: go build -o gotcpscan-win-x64.exe main.go
+          env:
+              GOOS: windows
+              GOARCH: 'amd64'
+        - name: Run windows/x86 build
+          run: go build -o gotcpscan-win-x86.exe main.go
+          env:
+              GOOS: windows
               GOARCH: '386'
         - id: Release
           uses: softprops/action-gh-release@v1
           with:
               files: |
-                gotcpscan-x86
-                gotcpscan-x64
+                gotcpscan-lin-x64
+                gotcpscan-lin-x86
+                gotcpscan-win-x64.exe
+                gotcpscan-win-x86.exe
